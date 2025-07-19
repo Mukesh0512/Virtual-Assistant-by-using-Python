@@ -2,35 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Virtual Assistant Web</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <title>Web Virtual Assistant</title>
 </head>
-<body>
-  <div class="container">
-    <h1>🧠 Virtual Assistant</h1>
-    <input type="text" id="query" placeholder="Type your command..." />
-    <button onclick="askAssistant()">Ask</button>
-    <p id="responseText"></p>
-  </div>
-
-  <script>
-    async function askAssistant() {
-      const query = document.getElementById("query").value;
-      const res = await fetch("/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `query=${encodeURIComponent(query)}`,
-      });
-
-      const data = await res.json();
-      const responseText = data.response;
-      document.getElementById("responseText").innerText = responseText;
-
-      // Speak the response using browser's TTS
-      const speech = new SpeechSynthesisUtterance(responseText);
-      window.speechSynthesis.speak(speech);
-    }
-  </script>
+<body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+  <h1>🎙️ Web Virtual Assistant</h1>
+  <button id="start-btn" style="padding: 10px 20px; font-size: 18px;">🎤 Start Listening</button>
+  <p id="user-text" style="margin-top: 30px; font-size: 20px;"></p>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
+
