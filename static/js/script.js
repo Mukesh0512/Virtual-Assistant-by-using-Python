@@ -22,6 +22,16 @@ if (SpeechRecognition) {
     .then(res => res.json())
     .then(data => {
       speak(data.reply);
+      // If the reply contains a known phrase, trigger opening in new tab
+  if (data.reply.includes("Opening YouTube")) {
+    window.open("https://youtube.com", "_blank");
+  } else if (data.reply.includes("Opening Google")) {
+    window.open("https://google.com", "_blank");
+  } else if (data.reply.includes("Opening Facebook")) {
+    window.open("https://facebook.com", "_blank");
+  } else if (data.reply.includes("Opening LinkedIn")) {
+    window.open("https://linkedin.com", "_blank");
+  }
     });
   };
 
