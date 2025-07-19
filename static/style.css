@@ -1,23 +1,26 @@
 body {
-  background: #f3f4f6;
+  background: url('/static/ai-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   padding: 40px;
+  color: #ffffff; /* Makes text readable on dark bg */
 }
 
 .container {
   max-width: 600px;
   margin: auto;
-  background: #ffffff;
+  background: rgba(0, 0, 0, 0.6); /* translucent overlay */
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 button {
   padding: 10px 20px;
-  background: #6366f1;
-  color: white;
+  background: #00e0ff;
+  color: black;
+  font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -25,7 +28,7 @@ button {
 }
 
 button:hover {
-  background: #4f46e5;
+  background: #00c6e6;
 }
 
 #user-text {
@@ -33,3 +36,32 @@ button:hover {
   font-weight: bold;
   font-size: 20px;
 }
+
+#response-text {
+  margin-top: 20px;
+  font-size: 18px;
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+ul#command-history {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+ul#command-history li {
+  margin: 5px 0;
+  background: rgba(255,255,255,0.1);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+ul#command-history li:hover {
+  background: rgba(255,255,255,0.3);
+}
+
