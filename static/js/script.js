@@ -1,5 +1,7 @@
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+let pendingAction = null;
+
 if (SpeechRecognition) {
   const recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
@@ -22,17 +24,28 @@ if (SpeechRecognition) {
     .then(res => res.json())
     .then(data => {
       speak(data.reply);
-      // If the reply contains a known phrase, trigger opening in new tab
-  if (data.reply.includes("Opening YouTube")) {
-    window.open("https://youtube.com", "_blank");
-  } else if (data.reply.includes("Opening Google")) {
-    window.open("https://google.com", "_blank");
-  } else if (data.reply.includes("Opening Facebook")) {
-    window.open("https://facebook.com", "_blank");
-  } else if (data.reply.includes("Opening LinkedIn")) {
-    window.open("https://linkedin.com", "_blank");
-  }
+
+      // Set up pending action instead of immediately opening
+      if (data.reply.includes("Opening YouTube")) {
+        pendingAction = () => window.open("https://youtube.com", "_blank");
+      } else if (data.reply.includes("Opening Google")) {
+        pendingAction = () => window.open("https://google.com", "_blank");
+      } else if (data.reply.includes("Opening Facebook")) {
+        pendingAction = () => window.open("https://facebook.com", "_blank");
+      } else if (data.reply.includes("Opening LinkedIn")) {
+        pendingAction = () => window.open("https://linkedin.com", "_blank");
+      } else {
+        pendingAction = null;
+      }
     });
+  };
+
+  recognition.onend = () => {
+    // 🔥 Now it's allowed since it's in user gesture scope
+    if (pendingAction) {
+      pendingAction();
+      pendingAction = null;
+    }
   };
 
   recognition.onerror = (event) => {
