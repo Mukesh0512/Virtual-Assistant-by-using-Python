@@ -14,29 +14,22 @@ body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-input {
-  padding: 10px;
-  width: 70%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
 button {
   padding: 10px 20px;
-  margin-left: 10px;
   background: #6366f1;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 18px;
 }
 
 button:hover {
   background: #4f46e5;
 }
 
-#responseText {
+#user-text {
   margin-top: 20px;
   font-weight: bold;
+  font-size: 20px;
 }

@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>Web Virtual Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
-  <h1>🎙️ Web Virtual Assistant</h1>
-  <button id="start-btn" style="padding: 10px 20px; font-size: 18px;">🎤 Start Listening</button>
-  <p id="user-text" style="margin-top: 30px; font-size: 20px;"></p>
+<body>
+  <div class="container">
+    <h1>🎙️ Web Virtual Assistant</h1>
+    <button id="start-btn">🎤 Start Listening</button>
+    <p id="user-text"></p>
+  </div>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
-

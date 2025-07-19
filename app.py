@@ -1,36 +1,35 @@
 from flask import Flask, render_template, request, jsonify
-import openai
+import webbrowser
 import os
-from gtts import gTTS
-import pygame
 
 app = Flask(__name__)
-
-# Set your OpenAI API key here
-openai.api_key = "<YOUR_OPENAI_KEY>"
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/ask", methods=["POST"])
-def ask():
+@app.route("/process", methods=["POST"])
+def process():
     data = request.get_json()
-    user_input = data["message"]
+    command = data.get("message", "").lower()
 
-    try:
-        # Call OpenAI API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant named Jarvis."},
-                {"role": "user", "content": user_input}
-            ]
-        )
-        reply = response['choices'][0]['message']['content']
-        return jsonify({"reply": reply})
-    except Exception as e:
-        return jsonify({"reply": "Error: " + str(e)})
+    # Web actions
+    if "open youtube" in command:
+        webbrowser.open("https://youtube.com")
+        reply = "Opening YouTube."
+    elif "open google" in command:
+        webbrowser.open("https://google.com")
+        reply = "Opening Google."
+    elif "open facebook" in command:
+        webbrowser.open("https://facebook.com")
+        reply = "Opening Facebook."
+    elif "open linkedin" in command:
+        webbrowser.open("https://linkedin.com")
+        reply = "Opening LinkedIn."
+    else:
+        reply = "Sorry, I can't handle that command yet."
+
+    return jsonify({"reply": reply})
 
 if __name__ == "__main__":
     app.run(debug=True)
