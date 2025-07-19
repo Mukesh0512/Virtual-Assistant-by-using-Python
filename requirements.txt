@@ -1,0 +1,8 @@
+Flask
+speechrecognition
+pyttsx3
+requests
+openai
+gtts
+pygame
+Flask

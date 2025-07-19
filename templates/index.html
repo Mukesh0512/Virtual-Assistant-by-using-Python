@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Assistant Web</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🧠 Virtual Assistant</h1>
+    <input type="text" id="query" placeholder="Type your command..." />
+    <button onclick="askAssistant()">Ask</button>
+    <p id="responseText"></p>
+  </div>
+
+  <script>
+    async function askAssistant() {
+      const query = document.getElementById("query").value;
+      const res = await fetch("/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `query=${encodeURIComponent(query)}`,
+      });
+
+      const data = await res.json();
+      const responseText = data.response;
+      document.getElementById("responseText").innerText = responseText;
+
+      // Speak the response using browser's TTS
+      const speech = new SpeechSynthesisUtterance(responseText);
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>
