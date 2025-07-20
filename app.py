@@ -17,7 +17,7 @@ def process():
     command = data.get("message", "").lower()
 
     reply = "Sorry, I can't handle that command yet."
-    playsound = "error"
+    playsound = None
 
     if any(word in command for word in ["sarcastic", "mood", "mood mode"]):
         responses = [
@@ -85,8 +85,14 @@ def process():
             os._exit(0)
 
         threading.Thread(target=delayed_shutdown).start()
+        
+    if reply == "Sorry, I can't handle that command yet.":
+        print(f"[❌ Unknown Command] -> {command}")
+        playsound = "error"
 
     return jsonify({"reply": reply, "playSound": playsound})
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
