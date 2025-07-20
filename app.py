@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 import webbrowser
 import os
 import random
+import threading
+import time
 
 app = Flask(__name__)
 
@@ -16,9 +18,7 @@ def process():
 
     reply = "Sorry, I can't handle that command yet."
 
-    # Sarcastic mode responses
-    sarcastic_mode = any(word in command for word in ["sarcastic", "mood", "mood mode"])
-    if sarcastic_mode:
+    if any(word in command for word in ["sarcastic", "mood", "mood mode"]):
         responses = [
             "Oh wow, another command... how original 🙄",
             "Seriously? I was just relaxing.",
@@ -27,11 +27,9 @@ def process():
         reply = random.choice(responses)
         return jsonify({"reply": reply})
 
-    # Greetings
     if "jarvis" in command or "hello jarvis" in command:
         reply = "Hi Developer, how can I assist you today?"
 
-    # Custom talks
     elif "how are you" in command:
         responses = [
             "Running 99.99% error-free!",
@@ -61,24 +59,34 @@ def process():
     elif "do you love me" in command:
         reply = "I'm just a script, but if I could feel... I'd say you're pretty cool. 💙"
 
-    # Web opening commands
     elif "open youtube" in command:
         webbrowser.open("https://youtube.com")
         reply = "Opening YouTube."
+
     elif "open google" in command:
         webbrowser.open("https://google.com")
         reply = "Opening Google."
+
     elif "open facebook" in command:
         webbrowser.open("https://facebook.com")
         reply = "Opening Facebook."
+
     elif "open linkedin" in command:
         webbrowser.open("https://linkedin.com")
         reply = "Opening LinkedIn."
-    elif "shutdown" in command:
-        os._exit(0)
 
+    elif "shutdown" in command or "shutdown jarvis" in command:
+        reply = "Goodbye Developer. Shutting down..."
+
+        def delayed_shutdown():
+            time.sleep(2)
+            os._exit(0)
+
+        threading.Thread(target=delayed_shutdown).start()
 
     return jsonify({"reply": reply})
 
+
 if __name__ == "__main__":
     app.run(debug=True)
+

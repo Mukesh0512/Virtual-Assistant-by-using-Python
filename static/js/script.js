@@ -55,11 +55,14 @@ if (SpeechRecognition) {
   recognition.lang = 'en-US';
 
   startBtn.addEventListener("click", () => {
+    bgMusic.volume = 0.3;
+    bgMusic.loop = true;
+    bgMusic.play();
     recognition.start();
   });
 
   recognition.onresult = (event) => {
-    const userSpeech = event.results[0][0].transcript;
+    const userSpeech = event.results[0][0].transcript.toLowerCase();
     document.getElementById("user-text").innerText = "You said: " + userSpeech;
 
     fetch("/process", {
@@ -69,21 +72,31 @@ if (SpeechRecognition) {
     })
     .then(res => res.json())
     .then(data => {
-      typeWriterEffect(data.reply, "response-text");
-      speak(data.reply);
-      addToHistory(userSpeech, data.reply);
+      const reply = data.reply;
+
+      // Handle shutdown
+      if (userSpeech.includes("shutdown jarvis") || userSpeech.includes("shut down jarvis")) {
+        playShutdown();
+        typeWriterEffect("Goodbye! Shutting down...", "response-text");
+        speak("Goodbye! Shutting down...");
+        return;
+      }
+
+      typeWriterEffect(reply, "response-text");
+      speak(reply);
+      addToHistory(userSpeech, reply);
 
       const link = document.getElementById("fake-link");
-      if (data.reply.includes("Opening YouTube")) {
+      if (reply.includes("Opening YouTube")) {
         link.href = "https://youtube.com";
         link.click();
-      } else if (data.reply.includes("Opening Google")) {
+      } else if (reply.includes("Opening Google")) {
         link.href = "https://google.com";
         link.click();
-      } else if (data.reply.includes("Opening Facebook")) {
+      } else if (reply.includes("Opening Facebook")) {
         link.href = "https://facebook.com";
         link.click();
-      } else if (data.reply.includes("Opening LinkedIn")) {
+      } else if (reply.includes("Opening LinkedIn")) {
         link.href = "https://linkedin.com";
         link.click();
       }

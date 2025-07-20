@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body onload="playStartup()">
-  <audio id="bg-music" src="{{ url_for('static', filename='music.mp3') }}" autoplay loop></audio>
-  <audio id="startup-sound" src="{{ url_for('static', filename='startup.mp3') }}"></audio>
-  <audio id="shutdown-sound" src="{{ url_for('static', filename='shutdown.mp3') }}"></audio>
-  <audio id="error-sound" src="{{ url_for('static', filename='error.mp3') }}"></audio>
+<audio id="bg-music" src="static/sounds/music.mp3"></audio>
+<audio id="startup-sound" src="static/sounds/startup.mp3"></audio>
+<audio id="shutdown-sound" src="static/sounds/shutdown.mp3"></audio>
+<audio id="error-sound" src="static/sounds/error.mp3"></audio>
 
   <a id="fake-link" href="#" target="_blank" style="display:none;"></a>
 
