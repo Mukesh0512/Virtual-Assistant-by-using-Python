@@ -17,7 +17,7 @@ def process():
     command = data.get("message", "").lower()
 
     reply = "Sorry, I can't handle that command yet."
-    playsound = None
+    playsound = "error"
 
     if any(word in command for word in ["sarcastic", "mood", "mood mode"]):
         responses = [
