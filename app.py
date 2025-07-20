@@ -29,6 +29,7 @@ def process():
 
     elif "jarvis" in command or "hello jarvis" in command or "hello" in command:
         reply = "Hi Developer, how can I assist you today?"
+        playsound = "startup"
 
     elif "how r u" in command or "how are you" in command:
         responses = [
