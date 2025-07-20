@@ -16,28 +16,7 @@ Jarvis is your personalized voice-controlled virtual assistant, built using **Py
 - 💬 Command history panel for quick re-use
 - 🖼️ Clean and dark-glassmorphic design with a responsive layout
 
----
 
-## 📁 Project Structure
-
-project-root/
-│
-├── static/
-│ ├── ai-bg.jpg # Background image
-│ ├── style.css # UI styling (responsive and modern)
-│ ├── error.mp3 # Error sound clip
-│ ├── background.mp3 # Background music
-│
-├── templates/
-│ └── index.html # Frontend HTML UI
-│
-├── app.py # Main Flask server
-├── requirements.txt # Python dependencies
-└── README.md
-
-yaml
-Copy
-Edit
 
 ---
 
