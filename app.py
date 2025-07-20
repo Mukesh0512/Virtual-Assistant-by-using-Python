@@ -30,7 +30,7 @@ def process():
     if "jarvis" in command or "hello jarvis" in command:
         reply = "Hi Developer, how can I assist you today?"
 
-    elif "how are you" in command:
+    elif "how r u" in command or "how are you" in command:
         responses = [
             "Running 99.99% error-free!",
             "Doing great, just debugging myself.",
@@ -84,7 +84,7 @@ def process():
 
         threading.Thread(target=delayed_shutdown).start()
 
-    return jsonify({"reply": reply})
+        return jsonify({"reply": reply, "playsound": "shutdown"})
 
 
 if __name__ == "__main__":

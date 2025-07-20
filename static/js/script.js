@@ -22,7 +22,7 @@ function playError() {
 
 function typeWriterEffect(text, elementId) {
   let i = 0;
-  const speed = 30;
+  const speed = 40; // ⬅️ Slower typing
   const target = document.getElementById(elementId);
   target.innerText = "";
 
@@ -57,7 +57,7 @@ if (SpeechRecognition) {
   startBtn.addEventListener("click", () => {
     bgMusic.volume = 0.3;
     bgMusic.loop = true;
-    bgMusic.play();
+    bgMusic.play(); // ✅ Background music on start
     recognition.start();
   });
 
@@ -74,18 +74,21 @@ if (SpeechRecognition) {
     .then(data => {
       const reply = data.reply;
 
-      // Handle shutdown
-      if (userSpeech.includes("shutdown jarvis") || userSpeech.includes("shut down jarvis")) {
-        playShutdown();
-        typeWriterEffect("Goodbye! Shutting down...", "response-text");
-        speak("Goodbye! Shutting down...");
-        return;
-      }
-
+      // ✅ Type & Speak the response
       typeWriterEffect(reply, "response-text");
       speak(reply);
       addToHistory(userSpeech, reply);
 
+      // ✅ 🔊 Special Sound Triggering based on backend flag
+      if (data.playSound === "shutdown") {
+        playShutdown();
+      } else if (data.playSound === "startup") {
+        playStartup();
+      } else if (data.playSound === "error") {
+        playError();
+      }
+
+      // ✅ Auto redirect for command responses
       const link = document.getElementById("fake-link");
       if (reply.includes("Opening YouTube")) {
         link.href = "https://youtube.com";
