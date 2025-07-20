@@ -17,6 +17,7 @@ def process():
     command = data.get("message", "").lower()
 
     reply = "Sorry, I can't handle that command yet."
+    playsound = None
 
     if any(word in command for word in ["sarcastic", "mood", "mood mode"]):
         responses = [
@@ -25,9 +26,8 @@ def process():
             "Sure, let me drop everything and serve you like the digital butler I am 😏"
         ]
         reply = random.choice(responses)
-        return jsonify({"reply": reply})
 
-    if "jarvis" in command or "hello jarvis" in command:
+    elif "jarvis" in command or "hello jarvis" in command or "hello" in command:
         reply = "Hi Developer, how can I assist you today?"
 
     elif "how r u" in command or "how are you" in command:
@@ -51,7 +51,7 @@ def process():
         reply = "I’m Jarvis, your personal voice assistant. And part-time superhero sidekick."
 
     elif "who created you" in command:
-        reply = "I was created by the amazing Mukesh Soni — genius, visionary, legend!"
+        reply = "I was created by the amazing Er. Mukesh Soni — genius, visionary, legend!"
 
     elif "thank you" in command:
         reply = "You're always welcome, boss."
@@ -77,6 +77,7 @@ def process():
 
     elif "shutdown" in command or "shutdown jarvis" in command:
         reply = "Goodbye Developer. Shutting down..."
+        playsound = "shutdown"
 
         def delayed_shutdown():
             time.sleep(2)
@@ -84,8 +85,7 @@ def process():
 
         threading.Thread(target=delayed_shutdown).start()
 
-        return jsonify({"reply": reply, "playsound": "shutdown"})
-
+    return jsonify({"reply": reply, "playSound": playsound})
 
 if __name__ == "__main__":
     app.run(debug=True)

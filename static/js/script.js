@@ -8,6 +8,8 @@ const errorSound = document.getElementById("error-sound");
 const historyList = document.getElementById("command-history");
 const startBtn = document.getElementById("start-btn");
 
+let isMusicPlaying = false;
+
 function playStartup() {
   startupSound.play();
 }
@@ -22,7 +24,7 @@ function playError() {
 
 function typeWriterEffect(text, elementId) {
   let i = 0;
-  const speed = 40; // ⬅️ Slower typing
+  const speed = 40;
   const target = document.getElementById(elementId);
   target.innerText = "";
 
@@ -55,9 +57,12 @@ if (SpeechRecognition) {
   recognition.lang = 'en-US';
 
   startBtn.addEventListener("click", () => {
-    bgMusic.volume = 0.3;
-    bgMusic.loop = true;
-    bgMusic.play(); // ✅ Background music on start
+    if (!isMusicPlaying) {
+      bgMusic.volume = 0.3;
+      bgMusic.loop = true;
+      bgMusic.play();
+      isMusicPlaying = true;
+    }
     recognition.start();
   });
 
@@ -73,22 +78,21 @@ if (SpeechRecognition) {
     .then(res => res.json())
     .then(data => {
       const reply = data.reply;
+      const sound = data.playSound;
 
-      // ✅ Type & Speak the response
       typeWriterEffect(reply, "response-text");
       speak(reply);
       addToHistory(userSpeech, reply);
 
-      // ✅ 🔊 Special Sound Triggering based on backend flag
-      if (data.playSound === "shutdown") {
+      if (sound === "shutdown") {
         playShutdown();
-      } else if (data.playSound === "startup") {
+      } else if (sound === "startup") {
         playStartup();
-      } else if (data.playSound === "error") {
+      } else if (sound === "error") {
         playError();
       }
 
-      // ✅ Auto redirect for command responses
+      // Auto redirect
       const link = document.getElementById("fake-link");
       if (reply.includes("Opening YouTube")) {
         link.href = "https://youtube.com";
@@ -119,3 +123,4 @@ if (SpeechRecognition) {
   alert("Speech Recognition not supported in this browser.");
   playError();
 }
+
